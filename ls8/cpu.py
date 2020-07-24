@@ -56,7 +56,6 @@ class CPU:
 
         self.CMD = {
             0b10100000: self.ADD,
-            0b10101000: self.AND,
             0b01010000: self.CALL,
             0b10100111: self.CMP,
             0b01100110: self.DEC,
@@ -74,21 +73,16 @@ class CPU:
             0b01010110: self.JNE,
             0b10000011: self.LD,
             0b10000010: self.LDI,
-            0b10100100: self.MOD,
             0b10100010: self.MUL,
             0b00000000: self.NOP,
-            0b01101001: self.NOT,
-            0b10101010: self.OR,
             0b01000110: self.POP,
             0b01001000: self.PRA,
             0b01000111: self.PRN,
             0b01000101: self.PUSH,
             0b00010001: self.RET,
-            0b10101100: self.SHL,
-            0b10101101: self.SHR,
             0b10000100: self.ST,
             0b10100001: self.SUB,
-            0b10101011: self.XOR
+        
         }
 
     def ram_read(self, address):
@@ -116,7 +110,7 @@ class CPU:
         self.reg[reg_a] = self.reg[reg_a] + self.reg[reg_b]
         self.PC += 3
 
-    def AND(self):
+    # def AND(self):
         """
         *This is an instruction handled by the ALU.*
 
@@ -131,11 +125,11 @@ class CPU:
         A8 0a 0b
         ```
         """
-        reg_a = self.ram_read(self.PC + 1)
-        reg_b = self.ram_read(self.PC + 2)
-        debug(f"AND R{reg_a}, R{reg_b}")
-        self.reg[reg_a] = self.reg[reg_a] & self.reg[reg_b]
-        self.PC += 3
+        # reg_a = self.ram_read(self.PC + 1)
+        # reg_b = self.ram_read(self.PC + 2)
+        # debug(f"AND R{reg_a}, R{reg_b}")
+        # self.reg[reg_a] = self.reg[reg_a] & self.reg[reg_b]
+        # self.PC += 3
 
     def CALL(self):
         debug(f"CALL R{self.ram_read(self.PC + 1)}")
