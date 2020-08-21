@@ -93,11 +93,11 @@ class CPU:
         }
 
     def ram_read(self, address):
-        # debug(f"read {self.ram[address]} from {address}", "T")
-        return self.ram[address]
+         debug(f"read {self.ram[address]} from {address}", "T")
+         return self.ram[address]
 
     def ram_write(self, address, value):
-       # debug(f"wrote {value} to {address}", "T")
+        debug(f"wrote {value} to {address}", "T")
         self.ram[address] = value
 
     def load(self, program):
@@ -134,12 +134,12 @@ class CPU:
         """
         reg_a = self.ram_read(self.PC + 1)
         reg_b = self.ram_read(self.PC + 2)
-        #debug(f"AND R{reg_a}, R{reg_b}")
+        debug(f"AND R{reg_a}, R{reg_b}")
         self.reg[reg_a] = self.reg[reg_a] & self.reg[reg_b]
         self.PC += 3
 
     def CALL(self):
-       # debug(f"CALL R{self.ram_read(self.PC + 1)}")
+        debug(f"CALL R{self.ram_read(self.PC + 1)}")
         """
         Call a subroutine from an address stored in register
         address of the next instruction is pushed onto the stack
@@ -154,11 +154,11 @@ class CPU:
         # push PC+2 onto the stack to retrieve later
         self.reg[self.SP] -= 1
         self.ram_write(self.reg[self.SP], self.PC + 2)
-       # debug(f"pushed {self.PC + 2} to stack", "T")
+        debug(f"pushed {self.PC + 2} to stack", "T")
 
         # get subroutine from given register
         self.PC = self.reg[self.ram_read(self.PC + 1)]
-       # debug(f"setting PC to {self.reg[self.ram_read(self.PC + 1)]}", "T")
+        debug(f"setting PC to {self.reg[self.ram_read(self.PC + 1)]}", "T")
 
     def CMP(self):
         """ 
@@ -177,16 +177,16 @@ class CPU:
         """
         reg_a = self.ram_read(self.PC + 1)
         reg_b = self.ram_read(self.PC + 2)
-      #  debug(f"CMP R{reg_a}, R{reg_b}")
+        debug(f"CMP R{reg_a}, R{reg_b}")
         if self.reg[reg_a] > self.reg[reg_b]:
             debug(f"Setting flag to Greater than", "T")
-            self.FL = 0b00000010;
+            self.FL = 0b00000010
         elif self.reg[reg_a] == self.reg[reg_b]:
-        #    debug(f"Setting flag to Equal", "T")
-            self.FL = 0b00000001;
+            debug(f"Setting flag to Equal", "T")
+            self.FL = 0b00000001
         elif self.reg[reg_a] < self.reg[reg_b]:
-         #   debug(f"Setting flag to Less than", "T")
-            self.FL = 0b00000100;
+            debug(f"Setting flag to Less than", "T")
+            self.FL = 0b00000100
 
         self.PC += 3
 
@@ -201,7 +201,7 @@ class CPU:
         pass
 
     def HLT(self):
-      #  debug("calling HLT")
+        debug("calling HLT")
         self.PC += 1
         sys.exit()
 
@@ -236,7 +236,7 @@ class CPU:
             debug(f"Jumping to R{reg}", "T")
             self.PC = self.reg[reg]
         else:
-          #  debug(f"Did not jump", "T")
+            debug(f"Did not jump", "T")
             self.PC += 2
 
     def JGE(self):
@@ -255,7 +255,7 @@ class CPU:
         pass
 
     def JLT(self):
-       # debug("calling JLT")
+        debug("calling JLT")
         self.PC += 1
         pass
 
@@ -270,7 +270,7 @@ class CPU:
         54 0r
         ```
         """
-      #  debug(f"JMP, R{self.ram_read(self.PC+1)}")
+        debug(f"JMP, R{self.ram_read(self.PC+1)}")
         reg = self.ram_read(self.PC+1)
         self.PC = self.reg[reg]
         debug(f"Jumping to {self.PC}", "T")
@@ -286,22 +286,22 @@ class CPU:
         56 0r
         ```
         """
-      #  debug(f"JNE R{self.ram_read(self.PC + 1)}")
+        debug(f"JNE R{self.ram_read(self.PC + 1)}")
         reg = self.ram_read(self.PC + 1)
         should_jump = self.FL & 0b00000001
         if should_jump == 0:
             self.PC = self.reg[reg]
-         #   debug(f"Making a jump to {self.PC}", "T")
+            debug(f"Making a jump to {self.PC}", "T")
         else:
             self.PC += 2
             debug(f"Not making a jump", "T")
 
     def LD(self):
-       # debug("calling LD")
+        debug("calling LD")
         self.PC += 1
 
     def LDI(self):
-       # debug(f"LDI R{self.ram_read(self.PC + 1)}, {self.ram_read(self.PC + 2)}")
+        debug(f"LDI R{self.ram_read(self.PC + 1)}, {self.ram_read(self.PC + 2)}")
         reg = self.ram_read(self.PC + 1)
         self.reg[reg] = self.ram_read(self.PC + 2)
         debug(f"set R{reg} to value {self.ram_read(self.PC + 2)}", "T")
@@ -318,9 +318,9 @@ class CPU:
         # store new value in register A
         reg_a = self.ram_read(self.PC + 1)
         reg_b = self.ram_read(self.PC + 2)
-       # debug(f"MUL R{reg_a}, R{reg_b}")
+        debug(f"MUL R{reg_a}, R{reg_b}")
         self.reg[self.ram_read(self.PC + 1)] = self.reg[reg_a] * self.reg[reg_b]
-      #  debug(f"setting R{reg_a} to {self.reg[reg_a]} * {self.reg[reg_b]}", "T")
+        debug(f"setting R{reg_a} to {self.reg[reg_a]} * {self.reg[reg_b]}", "T")
         self.PC += 3
 
     def NOP(self):
@@ -339,12 +339,12 @@ class CPU:
         pass
 
     def POP(self):
-     #   debug(f"POP R{self.ram_read(self.PC + 1)}")
+        debug(f"POP R{self.ram_read(self.PC + 1)}")
         # get register id from ram
         reg = self.ram_read(self.PC + 1)
         # set registers value to last value on stack
         self.reg[reg] = self.ram_read(self.reg[self.SP])
-      #  debug(f"Popped value {self.ram_read(self.reg[self.SP])} into R{reg}")
+        debug(f"Popped value {self.ram_read(self.reg[self.SP])} into R{reg}")
         # increment stack
         self.reg[self.SP] += 1
         # increment PC to pass memory spaces ready by program
@@ -356,13 +356,13 @@ class CPU:
         pass
 
     def PRN(self):
-      #  debug(f"PRN, R{self.ram_read(self.PC + 1)}")
-      #  debug(f"printing register {self.ram_read(self.PC + 1)}", "T")
+        debug(f"PRN, R{self.ram_read(self.PC + 1)}")
+        debug(f"printing register {self.ram_read(self.PC + 1)}", "T")
         print(self.reg[self.ram_read(self.PC + 1)])
         self.PC += 2
 
     def PUSH(self):
-      #  debug(f"PUSH, R{self.ram_read(self.PC + 1)}")
+        debug(f"PUSH, R{self.ram_read(self.PC + 1)}")
         # decrement stack pointer by 1
         self.reg[self.SP] -= 1
 
@@ -380,7 +380,7 @@ class CPU:
         self.PC += 2
 
     def RET(self):
-       # debug("RET")
+        debug("RET")
         # set PC to location popped from stack
         self.PC = self.ram_read(self.reg[self.SP])
         self.reg[self.SP] += 1
@@ -441,7 +441,7 @@ class CPU:
         sys.exit(1)
 
     def run(self):
-      #  debug("calling run")
+        debug("calling run")
         """Run the CPU."""
         self.PC = 0  # point to beginning of RAM
         self.reg[self.SP] = -1  # point to end of RAM
