@@ -361,7 +361,7 @@ class CPU:
         print(self.reg[self.ram_read(self.PC + 1)])
         self.PC += 2
 
-    def PUSH(self):
+    def PUSH(self, reg):
         debug(f"PUSH, R{self.ram_read(self.PC + 1)}")
         # decrement stack pointer by 1
         self.reg[self.SP] -= 1
