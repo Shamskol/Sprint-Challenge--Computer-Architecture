@@ -63,33 +63,18 @@ class CPU:
             0b01100110: self.DEC,
             0b10100011: self.DIV,
             0b00000001: self.HLT,
-            0b01100101: self.INC,
-            0b01010010: self.INT,
-            0b00010011: self.IRET,
             0b01010101: self.JEQ,
-            0b01011010: self.JGE,
-            0b01010111: self.JGT,
-            0b01011001: self.JLE,
-            0b01011000: self.JLT,
             0b01010100: self.JMP,
             0b01010110: self.JNE,
             0b10000011: self.LD,
             0b10000010: self.LDI,
-            0b10100100: self.MOD,
             0b10100010: self.MUL,
-            0b00000000: self.NOP,
-            0b01101001: self.NOT,
-            0b10101010: self.OR,
             0b01000110: self.POP,
             0b01001000: self.PRA,
             0b01000111: self.PRN,
             0b01000101: self.PUSH,
             0b00010001: self.RET,
-            0b10101100: self.SHL,
-            0b10101101: self.SHR,
-            0b10000100: self.ST,
-            0b10100001: self.SUB,
-            0b10101011: self.XOR
+          
         }
 
     def ram_read(self, address):
@@ -204,21 +189,7 @@ class CPU:
         debug("calling HLT")
         self.PC += 1
         sys.exit()
-
-    def INC(self):
-     #   debug("calling INC")
-        self.PC += 1
-        pass
-
-    def INT(self):
-      #  debug("calling INT")
-        self.PC += 1
-        pass
-
-    def IRET(self):
-       # debug("calling IRET")
-        self.PC += 1
-        pass
+   
 
     def JEQ(self):
         """
@@ -238,26 +209,6 @@ class CPU:
         else:
             debug(f"Did not jump", "T")
             self.PC += 2
-
-    def JGE(self):
-      #  debug("calling JGE")
-        self.PC += 1
-        pass
-
-    def JGT(self):
-      #  debug("calling JGT")
-        self.PC += 1
-        pass
-
-    def JLE(self):
-      #  debug("calling JLE")
-        self.PC += 1
-        pass
-
-    def JLT(self):
-        debug("calling JLT")
-        self.PC += 1
-        pass
 
     def JMP(self):
         """
@@ -307,10 +258,7 @@ class CPU:
         debug(f"set R{reg} to value {self.ram_read(self.PC + 2)}", "T")
         self.PC += 3
 
-    def MOD(self):
-      #  debug("calling MOD")
-        self.PC += 1
-        pass
+    
 
     def MUL(self):
         # MUL
@@ -322,21 +270,6 @@ class CPU:
         self.reg[self.ram_read(self.PC + 1)] = self.reg[reg_a] * self.reg[reg_b]
         debug(f"setting R{reg_a} to {self.reg[reg_a]} * {self.reg[reg_b]}", "T")
         self.PC += 3
-
-    def NOP(self):
-      #  debug("calling NOP")
-        self.PC += 1
-        pass
-
-    def NOT(self):
-      #  debug("calling NOT")
-        self.PC += 1
-        pass
-
-    def OR(self):
-      #  debug("calling OR")
-        self.PC += 1
-        pass
 
     def POP(self):
         debug(f"POP R{self.ram_read(self.PC + 1)}")
@@ -354,7 +287,6 @@ class CPU:
       #  debug("calling PRA")
         self.PC += 1
         pass
-
     def PRN(self):
         debug(f"PRN, R{self.ram_read(self.PC + 1)}")
         debug(f"printing register {self.ram_read(self.PC + 1)}", "T")
@@ -385,30 +317,7 @@ class CPU:
         self.PC = self.ram_read(self.reg[self.SP])
         self.reg[self.SP] += 1
 
-    def SHL(self):
-      #  debug("calling SHL")
-        self.PC += 1
-        pass
-
-    def SHR(self):
-      #  debug("calling SHR")
-        self.PC += 1
-        pass
-
-    def ST(self):
-      #  debug("calling ST")
-        self.PC += 1
-        pass
-
-    def SUB(self):
-      #  debug("calling SUB")
-        self.PC += 1
-        pass
-
-    def XOR(self):
-      #  debug("calling XOR")
-        self.PC += 1
-        pass
+  
 
     def alu(self, op, reg_a, reg_b):
         """ALU operations."""
